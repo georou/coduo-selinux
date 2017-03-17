@@ -1,0 +1,53 @@
+policy_module(coduo, 1.4)
+
+########################################
+#
+# Declarations
+#
+
+#permissive coduo_t;
+
+type coduo_t;
+type coduo_exec_t;
+init_daemon_domain(coduo_t, coduo_exec_t)
+role system_r types coduo_t;
+
+type coduo_home_t;
+userdom_user_home_content(coduo_home_t)
+files_type(coduo_home_t)
+
+type coduo_unit_file_t;
+systemd_unit_file(coduo_unit_file_t)
+
+type coduo_port_t;
+corenet_port(coduo_port_t)
+
+########################################
+##
+## Local policy
+##
+
+allow coduo_t self:process execmem;
+allow coduo_t self:udp_socket { bind connect create getattr setopt };
+allow coduo_t coduo_port_t:udp_socket name_bind;
+
+manage_files_pattern(coduo_t, coduo_home_t, coduo_home_t)
+manage_dirs_pattern(coduo_t, coduo_home_t, coduo_home_t)
+exec_files_pattern(coduo_t, coduo_home_t, coduo_home_t)
+read_lnk_files_pattern(coduo_t, coduo_home_t, coduo_home_t)
+
+userdom_user_home_dir_filetrans(coduo_t, coduo_home_t, { file dir })
+
+
+
+corenet_udp_bind_generic_node(coduo_t)
+
+auth_read_passwd(coduo_t)
+
+sysnet_read_config(coduo_t)
+sysnet_dns_name_resolve(coduo_t)
+
+libs_legacy_use_ld_so(coduo_t)
+
+userdom_manage_user_home_content_dirs(coduo_t)
+userdom_manage_user_home_content_files(coduo_t)

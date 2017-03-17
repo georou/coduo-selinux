@@ -1,0 +1,6 @@
+HOME_DIR/coduo-srv(/.*)?			gen_context(system_u:object_r:coduo_home_t,s0)
+HOME_DIR/\.callofduty(/.*)?			gen_context(system_u:object_r:coduo_home_t,s0)
+HOME_DIR/coduo-srv/coduo_lnxded		--	gen_context(system_u:object_r:coduo_exec_t,s0)
+
+/usr/lib/systemd/system/coduo-srv.*	--	gen_context(system_u:object_r:coduo_unit_file_t,s0)
+

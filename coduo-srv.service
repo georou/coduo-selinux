@@ -1,0 +1,15 @@
+[Unit]
+Description="Call of Duty:UO Server"
+After=network-online.target
+
+[Service]
+Type=idle
+User=coduo
+Group=coduo
+WorkingDirectory=/home/coduo/coduo-srv
+Environment=LD_LIBRARY_PATH=/home/coduo/coduo-srv
+ExecStart=/home/coduo/coduo-srv/coduo_lnxded +exec dedicated.cfg +set ttycon 0 +set net_port 28960
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
