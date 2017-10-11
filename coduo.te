@@ -29,6 +29,7 @@ corenet_port(coduo_port_t)
 
 allow coduo_t self:process execmem;
 allow coduo_t self:udp_socket { bind connect create getattr read setopt write };
+
 allow coduo_t coduo_port_t:udp_socket name_bind;
 
 manage_files_pattern(coduo_t, coduo_home_t, coduo_home_t)
