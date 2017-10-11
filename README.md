@@ -54,7 +54,7 @@ semanage port -a -t coduo_port_t -p udp 28960
 # Open require firewall ports
 firewall-cmd --permanent --add-port=28960/udp
 OR
-iptables -I INPUT -m state --state NEW,ESTABLISHED -p udp --dport 28960 -j ACCEPT
+iptables -I INPUT -m conntrack --ctstate NEW,ESTABLISHED -p udp --dport 28960 -j ACCEPT
 
 # Start the server
 systemctl enable coduo-srv.service
@@ -82,7 +82,7 @@ semanage login -a -s user_u coduo
 
 * If you're getting permission errors, uncomment permissive in the .te file and try again. Re-check logs for any issues.
 
-* Ease way to add in allow rules is the below command, then copy or redirect into the .te module. Rebuild and re-install:
+* Easy way to add in allow rules is the below command, then copy or redirect into the .te module. Rebuild and re-install:
 * Don't forget to actually look at what is suggested. audit2allow will most likely go for a coarse grained permission!
 * Check man audit2allow for different switches.
 ```sh
